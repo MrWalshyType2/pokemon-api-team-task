@@ -8,14 +8,38 @@
   abilityCardCreator = (data, i) => {
     let card = document.createElement("div");
     let cardBody = document.createElement("div");
+    let name = document.createElement("h4");
+    let effectEntry = document.createElement("p");
+
+    fetch(`https://pokeapi.co/api/v2/ability/${i+1}`)
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject({
+                status: response.status,
+                statusText: response.statusText
+            });
+        }
+    })
+    .then((innerData) => {
+        effectEntry.innerText = `${innerData.effect_entries[1].effect}`;
+        console.log(innerData);
+    })
+    .catch((error) => {
+        console.log(`Error: ${error.status}, ${error.statusText}`);
+    });
 
     card.classList = "card my-3";
     cardBody.classList = "card-body";
 
     if (i >= 0) {
+        name.innerText = `Ability: ${data.results[i].name}`;
     } else {
     }
-
+    // console.log(data.results[i]);
+    cardBody.appendChild(name);
+    cardBody.appendChild(effectEntry);
     card.appendChild(cardBody);
     return card;
   };
@@ -74,7 +98,7 @@
     event.stopPropagation();
     emptyCardContainer();
 
-    fetch()
+    fetch("https://pokeapi.co/api/v2/ability/")
     .then((response) => {
         if (response.ok) {
             return response.json();
@@ -87,7 +111,9 @@
     })
     .then((data) => {
         // Change 100 to the num of items in data
-        for (let i = 0; i < 100; i++) {
+        let pageDataCount = data.count;
+        
+        for (let i = 0; i < pageDataCount; i++) {
             let card = abilityCardCreator(data, i);
             cardContainer.appendChild(card);
         }
