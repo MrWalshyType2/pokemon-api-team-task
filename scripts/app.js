@@ -10,6 +10,10 @@
     let cardBody = document.createElement("div");
     let name = document.createElement("h4");
     let effectEntry = document.createElement("p");
+    let genTitle = document.createElement("h5");
+    let generation = document.createElement("p");
+
+    genTitle.innerText = "Generation";
 
     fetch(`https://pokeapi.co/api/v2/ability/${i+1}`)
     .then((response) => {
@@ -24,6 +28,7 @@
     })
     .then((innerData) => {
         effectEntry.innerText = `${innerData.effect_entries[1].effect}`;
+        generation.innerText = `${innerData.generation.name}`;
         console.log(innerData);
     })
     .catch((error) => {
@@ -40,6 +45,8 @@
     // console.log(data.results[i]);
     cardBody.appendChild(name);
     cardBody.appendChild(effectEntry);
+    cardBody.appendChild(genTitle);
+    cardBody.appendChild(generation);
     card.appendChild(cardBody);
     return card;
   };
