@@ -96,16 +96,16 @@
         console.log(`Error: ${error.status}, ${error.statusText}`);
     });
   });
-
+  //#chynna
   characteristicsBtn.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
     emptyCardContainer();
 
-    fetch()
+    fetch('https://pokeapi.co/api/v2/characteristic/ $i++)'
     .then((response) => {
         if (response.ok) {
-            return response.json();
+            return response.json('https://pokeapi.co/api/v2/characteristic');
         } else {
             return Promise.reject({
                 status: response.status,
@@ -115,7 +115,7 @@
     })
     .then((data) => {
         // Change 100 to the num of items in data
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 30 i++) {
             let card = characteristicsCardCreator(data, i);
             cardContainer.appendChild(card);
         }
